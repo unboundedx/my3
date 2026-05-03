@@ -4,7 +4,7 @@ set -eu
 
 REPO_URL="${REPO_URL:-https://github.com/unboundedx/my3.git}"
 INSTALL_DIR="${INSTALL_DIR:-$HOME/my3}"
-DEFAULT_PASSWORD="5512097"
+DEFAULT_PASSWORD="12345678"
 DEFAULT_SERVER_NAME="$(hostname 2>/dev/null || echo trojan-server)"
 PASSWORD="${PASSWORD:-}"
 SERVER_NAME="${SERVER_NAME:-}"

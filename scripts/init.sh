@@ -14,7 +14,7 @@ if [ -f "$ENV_FILE" ]; then
   set +a
 fi
 
-PASSWORD="${PASSWORD:-5512097}"
+PASSWORD="${PASSWORD:-12345678}"
 CERT_DAYS="${CERT_DAYS:-3650}"
 SERVER_NAME="${SERVER_NAME:-$(hostname 2>/dev/null || echo trojan-server)}"
 

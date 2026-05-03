@@ -2,7 +2,7 @@
 
 This repository provides a Docker-based `trojan` server with:
 
-- Password preset to `5512097`
+- Password preset to `12345678`
 - Self-signed TLS certificate generated automatically
 - Certificate validity set to 10 years
 - Auto-generated `trojan` config and HTTPS fallback page
@@ -12,6 +12,7 @@ This repository provides a Docker-based `trojan` server with:
 - Docker restart policy so containers return after server reboot
 
 For a step-by-step command guide, see `USAGE.md`.
+For commands on multiple Linux distributions, see `DISTRO_INSTALL.md`.
 
 ## Quick start
 
@@ -41,7 +42,7 @@ If the server can access your GitHub repo directly, run:
 ```bash
 curl -fsSL https://raw.githubusercontent.com/unboundedx/my3/main/scripts/install.sh -o install.sh
 chmod +x install.sh
-PASSWORD=5512097 SERVER_NAME=your-domain.example ./install.sh
+PASSWORD=12345678 SERVER_NAME=your-domain.example ./install.sh
 ```
 
 If you want an interactive installer that prompts for the password and public IP or domain, run:
@@ -54,7 +55,7 @@ chmod +x scripts/install.sh
 It will prompt like this:
 
 ```text
-Enter Trojan password [5512097]:
+Enter Trojan password [12345678]:
 Enter public IP or domain [current-hostname]:
 ```
 
@@ -93,7 +94,7 @@ SOURCE_REPO=https://github.com/unboundedx/trojan-upstream.git ./scripts/bootstra
 You can override these when generating files:
 
 ```bash
-PASSWORD=5512097 SERVER_NAME=your-domain.example CERT_DAYS=3650 ./scripts/init.sh
+PASSWORD=12345678 SERVER_NAME=your-domain.example CERT_DAYS=3650 ./scripts/init.sh
 ```
 
 For the full installer:
@@ -101,7 +102,7 @@ For the full installer:
 ```bash
 REPO_URL=https://github.com/unboundedx/my3.git \
 INSTALL_DIR=$HOME/my3 \
-PASSWORD=5512097 \
+PASSWORD=12345678 \
 SERVER_NAME=your-domain.example \
 CERT_DAYS=3650 \
 ENABLE_AUTO_UPDATE=1 \

@@ -23,7 +23,7 @@ chmod +x scripts/install.sh
 The installer will prompt:
 
 ```text
-Enter Trojan password [5512097]:
+Enter Trojan password [12345678]:
 Enter public IP or domain [current-hostname]:
 ```
 
@@ -40,13 +40,13 @@ newgrp docker
 git clone https://github.com/unboundedx/my3.git
 cd my3
 chmod +x scripts/install.sh
-PASSWORD=5512097 SERVER_NAME=your-public-ip-or-domain ./scripts/install.sh
+PASSWORD=12345678 SERVER_NAME=your-public-ip-or-domain ./scripts/install.sh
 ```
 
 Example:
 
 ```bash
-PASSWORD=5512097 SERVER_NAME=52.69.3.188 ./scripts/install.sh
+PASSWORD=12345678 SERVER_NAME=52.69.3.188 ./scripts/install.sh
 ```
 
 ## 2. Check service status
