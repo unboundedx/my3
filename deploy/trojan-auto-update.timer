@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Trojan Docker auto-update every 15 minutes
+
+[Timer]
+OnBootSec=3m
+OnUnitActiveSec=15m
+Unit=trojan-auto-update.service
+
+[Install]
+WantedBy=timers.target
