@@ -4,10 +4,45 @@ set -eu
 
 REPO_URL="${REPO_URL:-https://github.com/unboundedx/my3.git}"
 INSTALL_DIR="${INSTALL_DIR:-$HOME/my3}"
-PASSWORD="${PASSWORD:-5512097}"
-SERVER_NAME="${SERVER_NAME:-$(hostname 2>/dev/null || echo trojan-server)}"
+DEFAULT_PASSWORD="5512097"
+DEFAULT_SERVER_NAME="$(hostname 2>/dev/null || echo trojan-server)"
+PASSWORD="${PASSWORD:-}"
+SERVER_NAME="${SERVER_NAME:-}"
 CERT_DAYS="${CERT_DAYS:-3650}"
 ENABLE_AUTO_UPDATE="${ENABLE_AUTO_UPDATE:-1}"
+
+prompt_value() {
+  VAR_NAME="$1"
+  PROMPT_TEXT="$2"
+  DEFAULT_VALUE="$3"
+  CURRENT_VALUE="$4"
+
+  if [ -n "$CURRENT_VALUE" ]; then
+    printf '%s' "$CURRENT_VALUE"
+    return 0
+  fi
+
+  if [ ! -t 0 ]; then
+    printf '%s' "$DEFAULT_VALUE"
+    return 0
+  fi
+
+  printf '%s' "$PROMPT_TEXT"
+  if [ -n "$DEFAULT_VALUE" ]; then
+    printf ' [%s]' "$DEFAULT_VALUE"
+  fi
+  printf ': '
+  read -r INPUT_VALUE
+
+  if [ -n "$INPUT_VALUE" ]; then
+    printf '%s' "$INPUT_VALUE"
+  else
+    printf '%s' "$DEFAULT_VALUE"
+  fi
+}
+
+PASSWORD=$(prompt_value "PASSWORD" "Enter Trojan password" "$DEFAULT_PASSWORD" "$PASSWORD")
+SERVER_NAME=$(prompt_value "SERVER_NAME" "Enter public IP or domain" "$DEFAULT_SERVER_NAME" "$SERVER_NAME")
 
 if command -v dnf >/dev/null 2>&1; then
   sudo dnf update -y

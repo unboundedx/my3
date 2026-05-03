@@ -40,6 +40,20 @@ chmod +x install.sh
 PASSWORD=5512097 SERVER_NAME=your-domain.example ./install.sh
 ```
 
+If you want an interactive installer that prompts for the password and public IP or domain, run:
+
+```bash
+chmod +x scripts/install.sh
+./scripts/install.sh
+```
+
+It will prompt like this:
+
+```text
+Enter Trojan password [5512097]:
+Enter public IP or domain [current-hostname]:
+```
+
 The installer will:
 
 - install `git`, `docker`, and `openssl`
