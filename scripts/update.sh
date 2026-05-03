@@ -4,6 +4,15 @@ set -eu
 
 ROOT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
 
+if command -v docker-compose >/dev/null 2>&1; then
+  COMPOSE_CMD="docker-compose"
+elif docker compose version >/dev/null 2>&1; then
+  COMPOSE_CMD="docker compose"
+else
+  printf '%s\n' "Docker Compose is not installed."
+  exit 1
+fi
+
 cd "$ROOT_DIR"
 
 if [ ! -d .git ]; then
@@ -14,5 +23,5 @@ fi
 
 git pull --ff-only
 "$ROOT_DIR/scripts/init.sh"
-docker compose pull
-docker compose up -d
+$COMPOSE_CMD pull
+$COMPOSE_CMD up -d
