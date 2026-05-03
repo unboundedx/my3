@@ -11,6 +11,8 @@ This repository provides a Docker-based `trojan` server with:
 - Auto-update script for servers that pull from GitHub
 - Docker restart policy so containers return after server reboot
 
+For a step-by-step command guide, see `USAGE.md`.
+
 ## Quick start
 
 ```bash
