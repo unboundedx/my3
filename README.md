@@ -25,7 +25,7 @@ docker-compose up -d
 
 - `docker-compose.yml`: starts `trojan` and an `nginx` fallback page
 - `scripts/install.sh`: installs Docker, installs `docker-compose`, clones or updates the repo, generates config, and starts the stack
-- `scripts/init.sh`: generates `/certs/server.crt`, `/certs/server.key`, `config/config.json`, and `www/index.html`
+- `scripts/init.sh`: generates `/certs/server.crt`, `/certs/server.key`, `config/config.json`, `www/index.html`, and persists settings in `.trojan.env`
 - `scripts/update.sh`: pulls the latest Git commit and refreshes containers, with both `docker compose` and `docker-compose` support
 - `deploy/trojan-auto-update.service` and `deploy/trojan-auto-update.timer`: optional systemd auto-pull example
 - `.github/workflows/compose-validate.yml`: runs `docker compose config` in GitHub Actions
@@ -69,6 +69,17 @@ CERT_DAYS=3650 \
 ENABLE_AUTO_UPDATE=1 \
 ./install.sh
 ```
+
+## Change password later
+
+Edit `.trojan.env` or rerun `init.sh` with a new password:
+
+```bash
+PASSWORD=new-password SERVER_NAME=your-domain.example ./scripts/init.sh
+docker-compose up -d
+```
+
+After the first run, the chosen values are stored in `.trojan.env`, so future `./scripts/update.sh` runs keep using the same password and server name.
 
 ## Upload to GitHub
 
@@ -121,6 +132,7 @@ sudo systemctl enable --now trojan-auto-update.timer
 ## Notes
 
 - `certs/` and `config/` are ignored by Git because they are generated locally.
+- `.trojan.env` is ignored by Git because it stores the local password and server identity.
 - Self-signed certificates require the client side to trust the generated certificate manually.
 - If you want other machines to `git clone` and run directly, keep the init script in the repo and let each target machine generate its own cert locally.
 - Containers use `restart: unless-stopped`, so with Docker enabled on boot they will return automatically after server reboot.

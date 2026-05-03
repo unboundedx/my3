@@ -3,14 +3,28 @@
 set -eu
 
 ROOT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+ENV_FILE="$ROOT_DIR/.trojan.env"
 CERT_DIR="$ROOT_DIR/certs"
 CONFIG_DIR="$ROOT_DIR/config"
 WWW_DIR="$ROOT_DIR/www"
+
+if [ -f "$ENV_FILE" ]; then
+  set -a
+  . "$ENV_FILE"
+  set +a
+fi
+
 PASSWORD="${PASSWORD:-5512097}"
 CERT_DAYS="${CERT_DAYS:-3650}"
 SERVER_NAME="${SERVER_NAME:-$(hostname 2>/dev/null || echo trojan-server)}"
 
 mkdir -p "$CERT_DIR" "$CONFIG_DIR" "$WWW_DIR"
+
+cat > "$ENV_FILE" <<EOF
+PASSWORD='$PASSWORD'
+SERVER_NAME='$SERVER_NAME'
+CERT_DAYS='$CERT_DAYS'
+EOF
 
 if [ ! -f "$CERT_DIR/server.key" ] || [ ! -f "$CERT_DIR/server.crt" ]; then
   openssl req \
