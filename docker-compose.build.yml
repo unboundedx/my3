@@ -1,0 +1,5 @@
+services:
+  trojan:
+    build:
+      context: ./vendor/trojan-upstream
+    image: ${TROJAN_IMAGE:-local/trojan-upstream:latest}

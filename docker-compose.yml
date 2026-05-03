@@ -1,6 +1,6 @@
 services:
   trojan:
-    image: trojangfw/trojan:latest
+    image: ${TROJAN_IMAGE:-trojangfw/trojan:latest}
     container_name: trojan-server
     restart: unless-stopped
     depends_on:

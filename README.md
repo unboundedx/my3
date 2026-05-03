@@ -24,7 +24,9 @@ docker-compose up -d
 ## Files
 
 - `docker-compose.yml`: starts `trojan` and an `nginx` fallback page
+- `docker-compose.build.yml`: optional override to build `trojan` locally from your mirrored source repo
 - `scripts/install.sh`: installs Docker, installs `docker-compose`, clones or updates the repo, generates config, and starts the stack
+- `scripts/bootstrap-trojan-source.sh`: clones or updates your mirrored `trojan` source repo into `vendor/trojan-upstream`
 - `scripts/init.sh`: generates `/certs/server.crt`, `/certs/server.key`, `config/config.json`, `www/index.html`, and persists settings in `.trojan.env`
 - `scripts/update.sh`: pulls the latest Git commit and refreshes containers, with both `docker compose` and `docker-compose` support
 - `deploy/trojan-auto-update.service` and `deploy/trojan-auto-update.timer`: optional systemd auto-pull example
@@ -63,6 +65,26 @@ The installer will:
 - generate the self-signed certificate and `trojan` config
 - start the stack
 - optionally enable the auto-update timer
+
+## Use your own mirrored Trojan source
+
+The default deployment still uses `trojangfw/trojan:latest` so existing servers keep working.
+
+If you want to stop depending on the original source repository and Docker image, use your own mirrored source repo:
+
+```bash
+chmod +x scripts/bootstrap-trojan-source.sh
+./scripts/bootstrap-trojan-source.sh
+docker-compose -f docker-compose.yml -f docker-compose.build.yml up -d --build
+```
+
+This clones `https://github.com/unboundedx/trojan-upstream.git` into `vendor/trojan-upstream` and builds the `trojan` image locally on your server.
+
+You can also override the source repo:
+
+```bash
+SOURCE_REPO=https://github.com/unboundedx/trojan-upstream.git ./scripts/bootstrap-trojan-source.sh
+```
 
 ## Optional environment variables
 
